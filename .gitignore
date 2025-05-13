@@ -1,0 +1,36 @@
+# Ignore the virtual environment
+.venv/
+env/
+venv/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Django migrations (except initial ones if needed)
+*/migrations/* 
+!*/migrations/__init__.py
+
+# Ignore database and secrets
+db.sqlite3
+*.log
+.env
+*.sqlite3
+
+# Ignore Django static and media files
+/static/
+*/staticfiles/
+*/media/
+
+# Ignore IDE/editor config files
+.vscode/
+.idea/
+*.swp
+
+# Ignore node_modules if you use JavaScript packages
+node_modules/
+
+# Ignore Pipenv environment files
+Pipfile.lock

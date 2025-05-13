@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen transition-all duration-500">
+
+    <div class="flex flex-col items-center w-full max-w-md"> 
+        <!-- Password Generator Section -->
+        <div class="w-full p-6 rounded-2xl shadow-xl bg-gray-800 transition-all duration-500" id="container">
+            <h1 class="text-3xl font-bold text-center mb-4 font-mono">🔐 Strong Password Generator</h1>
+
+            <!-- Password Display & Copy -->
+            <div class="flex items-center space-x-2 mb-4">
+                <input type="text" id="password" readonly class="w-full p-3 rounded-lg bg-gray-700 text-lg font-semibold text-green-400 outline-none">
+                <button onclick="copyPassword()" class="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg transition">
+                    📋 Copy
+                </button>
+            </div>
+
+            <!-- Password Length Selector -->
+            <div class="mb-4">
+                <label for="length" class="text-sm font-medium">Password Length: <span id="lengthValue">12</span></label>
+                <input type="range" id="length" min="6" max="20" value="12" class="w-full mt-2" oninput="updateLength()">
+            </div>
+
+            <!-- Special Characters Toggle -->
+            <div class="mb-4 flex items-center justify-between">
+                <label for="specialChars" class="text-sm font-medium">Include Special Characters</label>
+                <input type="checkbox" id="specialChars" class="toggle-checkbox" onchange="generatePassword()" checked>
+            </div>
+
+            <!-- Strength Indicator for Generated Password -->
+            <div class="mb-4">
+                <p class="text-sm font-medium">Strength: <span id="genStrengthText" class="font-bold text-yellow-400">Medium</span></p>
+                <div class="w-full h-2 bg-gray-600 rounded-md mt-1">
+                    <div id="genStrengthBar" class="h-2 bg-yellow-400 rounded-md transition-all"></div>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button onclick="generatePassword()" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all">
+                Generate Password 🔄
+            </button>
+        </div>
+
+        <!-- Optional Password Strength Checker (Now Separate) -->
+        <div class="w-full p-6 bg-gray-800 text-white rounded-lg shadow-lg mt-6">
+            <h2 class="text-xl font-bold mb-4 text-blue-400">🔍 Check Your Own Password Strength</h2>
+            
+            <input type="text" id="customPassword" placeholder="Enter your password..." 
+                class="w-full p-2 mb-3 rounded border border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-blue-400">
+        
+            <!-- Strength Indicator for Custom Password -->
+            <div class="relative w-full h-2 bg-gray-600 rounded-full overflow-hidden">
+                <div id="customStrengthBar" class="h-full w-0 transition-all duration-300"></div>
+            </div>
+        
+            <p id="customStrengthText" class="mt-2 text-sm font-bold"></p>
+        </div>
+    </div>
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            const includeSpecialChars = document.getElementById("specialChars").checked;
+            const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const numbers = "0123456789";
+            const symbols = "!@#$%^&*()_+";
+
+            let chars = letters + numbers;
+            if (includeSpecialChars) {
+                chars += symbols;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            document.getElementById("password").value = password;
+            evaluateGeneratedStrength(password);
+        }
+
+        function copyPassword() {
+            const passwordField = document.getElementById("password");
+            passwordField.select();
+            document.execCommand("copy");
+            alert("Password copied to clipboard! ✅");
+        }
+
+        function updateLength() {
+            document.getElementById("lengthValue").innerText = document.getElementById("length").value;
+            generatePassword(); // Automatically regenerate password when length changes
+        }
+
+        function evaluateGeneratedStrength(password) {
+            const strengthBar = document.getElementById("genStrengthBar");
+            const strengthText = document.getElementById("genStrengthText");
+            updateStrength(password, strengthBar, strengthText);
+        }
+
+        function evaluateCustomStrength() {
+            const password = document.getElementById("customPassword").value;
+            const strengthBar = document.getElementById("customStrengthBar");
+            const strengthText = document.getElementById("customStrengthText");
+            updateStrength(password, strengthBar, strengthText);
+        }
+
+        function updateStrength(password, barElement, textElement) {
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            if (strength <= 2) {
+                textElement.innerText = "Weak";
+                textElement.classList.add("text-red-500");
+                textElement.classList.remove("text-yellow-400", "text-green-500");
+                barElement.classList.add("bg-red-500");
+                barElement.classList.remove("bg-yellow-400", "bg-green-500");
+                barElement.style.width = "30%";
+            } else if (strength <= 4) {
+                textElement.innerText = "Medium";
+                textElement.classList.add("text-yellow-400");
+                textElement.classList.remove("text-red-500", "text-green-500");
+                barElement.classList.add("bg-yellow-400");
+                barElement.classList.remove("bg-red-500", "bg-green-500");
+                barElement.style.width = "60%";
+            } else {
+                textElement.innerText = "Strong";
+                textElement.classList.add("text-green-500");
+                textElement.classList.remove("text-yellow-400", "text-red-500");
+                barElement.classList.add("bg-green-500");
+                barElement.classList.remove("bg-yellow-400", "bg-red-500");
+                barElement.style.width = "100%";
+            }
+        }
+
+        window.onload = generatePassword;
+
+        document.getElementById("customPassword").addEventListener("input", evaluateCustomStrength);
+    </script>
+
+</body>
+</html>
