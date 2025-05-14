@@ -1,25 +1,53 @@
 # 🔐 Django Password Generator
 
-A secure and customizable password generator built with Python and Django. Users can generate strong passwords based on selected criteria such as length, inclusion of uppercase letters, numbers, and special characters.
+A secure and customizable password generator built with Python and Django using Pipenv for dependency management. Easily generate strong passwords with user-defined options like length, symbols, numbers, and uppercase letters.
 
 ## 🚀 Features
 
-- Generate random, secure passwords
-- Customize password length
-- Toggle inclusion of:
+- Random password generation
+- Adjustable password length
+- Toggle options for:
   - Uppercase letters
   - Numbers
   - Special characters
+- Simple and clean UI (Django Templates)
 
-## 🛠️ Technologies
+## 🛠️ Built With
 
-- Python
-- Django
-- HTML/CSS
+- Python 🐍
+- Django 🌐
+- Pipenv 📦
 
+## 📸 Screenshot
 
+## ⚙️ Installation & Setup (Using Pipenv)
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/AsiraDonzel/Django-Password-Generator.git
+   git clone https://github.com/your-username/django-password-generator.git
    cd django-password-generator
+2. Install Pipenv (if you don’t have it):
+  pip install pipenv
+3. Install dependencies and activate the virtual environment:
+   pipenv install
+   pipenv shell
+4. Run the development server:
+   python manage.py runserver
+5. Open in browser:
+   http://127.0.0.1:8000/
+
+⭐️ Star this project if you found it helpful!
+
+---
+
+Let me know if you want to include:
+
+- A demo video or GIF
+- Deployment instructions (e.g., on PythonAnywhere)
+- `LICENSE` or contribution guide
+
+Just drop your GitHub username and repo name if you want this auto-filled!
+
+   
+  
+ 
