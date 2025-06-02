@@ -27,11 +27,14 @@ A secure and customizable password generator built with Python and Django using 
    git clone https://github.com/your-username/django-password-generator.git
    cd django-password-generator
 2. Install Pipenv (if you don’t have it):
-  pip install pipenv
+   ```bash
+   pip install pipenv
 3. Install dependencies and activate the virtual environment:
+    ```bash   
    pipenv install
    pipenv shell
 4. Run the development server:
+    ```bash 
    python manage.py runserver
 5. Open in browser:
    http://127.0.0.1:8000/
