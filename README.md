@@ -24,7 +24,7 @@ A secure and customizable password generator built with Python and Django using 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/django-password-generator.git
+   git clone https://github.com/AsiraDonzel/django-password-generator.git
    cd django-password-generator
 2. Install Pipenv (if you don’t have it):
    ```bash
